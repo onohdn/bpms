@@ -116,3 +116,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# ↑The above is a template for github↑
+# ↓Here's the setup I added↓
+.project
