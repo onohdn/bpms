@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.bpms.domain.repository.Battingresults.BattingresultsRepository">
+
+    <resultMap id="BattingresultsResultMap" type="Battingresults">
+        <id property="id" column="id" />
+        <result property="plate_appearance" column="plate_appearance" />
+        <result property="at_bat" column="at_bat" />
+        <result property="hit" column="hit" />
+        <result property="two_base_hit" column="two_base_hit" />
+        <result property="three_base_hit" column="three_base_hit" />
+        <result property="home_run" column="home_run" />
+        <result property="walks" column="walks" />
+        <result property="hit_by_pitch" column="hit_by_pitch" />
+        <result property="sacrifice_bunt" column="sacrifice_bunt" />
+        <result property="sacrifice_fly" column="sacrifice_fly" />
+        <result property="faux_pas" column="faux_pas" />
+        <result property="batting_average" column="batting_average" />
+        <result property="on_base_percentage" column="on_base_percentage" />
+        <result property="slugging_percentage" column="slugging_percentage" />
+        <result property="on_base_plus_slugging" column="on_base_plus_slugging" />
+    </resultMap>
+
+    <select id="findById" parameterType="string" resultMap="BattingresultsResultMap">
+    <![CDATA[
+        SELECT
+            *            
+        FROM
+            battingresults 
+        WHERE
+            id = #{id}
+    ]]>
+    </select>
+
+    <select id="findAll" resultMap="BattingresultsResultMap">
+    <![CDATA[
+        SELECT
+            * 
+        FROM
+            battingresults 
+    ]]>
+    </select>
+
+    <insert id="create" parameterType="Battingresults">
+    <![CDATA[
+        INSERT INTO battingresults
+        (
+            id, 
+            plate_appearance,
+            at_bat,
+            hit,
+            two_base_hit,
+            three_base_hit,
+            home_run,
+            walks,
+            hit_by_pitch,
+            sacrifice_bunt,
+            sacrifice_fly,
+            faux_pas
+        ) 
+        VALUES
+        (
+            #{id}, 
+            #{plate_appearance},
+            #{at_bat},
+            #{hit},
+            #{two_base_hit},
+            #{three_base_hit},
+            #{home_run},
+            #{walks},
+            #{hit_by_pitch},
+            #{sacrifice_bunt},
+            #{sacrifice_fly},
+            #{faux_pas}
+        )
+    ]]>
+    </insert>
+
+    <update id="updateById" parameterType="Battingresults">
+    <![CDATA[
+        UPDATE
+            battingresults 
+        SET
+            plate_appearance = #{plate_appearance},
+            at_bat = #{at_bat},
+            hit = #{hit},
+            two_base_hit = #{two_base_hit},
+            three_base_hit = #{three_base_hit},
+            home_run = #{home_run},
+            walks = #{walks},
+            hit_by_pitch = #{hit_by_pitch},
+            sacrifice_bunt = #{sacrifice_bunt},
+            sacrifice_fly = #{sacrifice_fly},
+            faux_pas = #{faux_pas}
+        WHERE
+            id = #{id}
+    ]]>
+    </update>
+
+    <update id="updateIndexValueById" parameterType="Battingresults">
+    <![CDATA[
+        UPDATE
+            battingresults 
+        SET
+            batting_average = #{batting_average},
+            on_base_percentage = #{on_base_percentage},
+            slugging_percentage = #{slugging_percentage},
+            on_base_plus_slugging = #{on_base_plus_slugging}
+        WHERE
+            id = #{id}
+    ]]>
+    </update>
+
+    <delete id="deleteById" parameterType="Battingresults">
+    <![CDATA[
+        DELETE FROM battingresults 
+        WHERE
+            id = #{id}
+    ]]>
+    </delete>
+
+</mapper>

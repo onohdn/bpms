@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.bpms.domain.repository.user.UserRepository">
+
+    <resultMap id="userResultMap" type="User">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <select id="findById" parameterType="string" resultMap="userResultMap">
+    <![CDATA[
+        SELECT
+            id,
+            name
+        FROM
+            user 
+        WHERE
+            id = #{id}
+    ]]>
+    </select>
+
+    <select id="findAll" resultMap="userResultMap">
+    <![CDATA[
+        SELECT
+            id, 
+            name 
+        FROM
+            user 
+    ]]>
+    </select>
+
+    <insert id="create" parameterType="User">
+    <![CDATA[
+        INSERT INTO user
+        (
+            id, 
+            name
+        ) 
+        VALUES
+        (
+            #{id}, 
+            #{name}
+        )
+    ]]>
+    </insert>
+
+    <update id="updateById" parameterType="User">
+    <![CDATA[
+        UPDATE
+            user 
+        SET
+            name = #{name}, 
+        WHERE
+            id = #{id}
+    ]]>
+    </update>
+
+    <delete id="deleteById" parameterType="User">
+    <![CDATA[
+        DELETE FROM user 
+        WHERE
+            id = #{id}
+    ]]>
+    </delete>
+
+</mapper>
