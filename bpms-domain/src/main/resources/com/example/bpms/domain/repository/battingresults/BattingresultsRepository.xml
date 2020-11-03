@@ -3,7 +3,7 @@
     "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.bpms.domain.repository.Battingresults.BattingresultsRepository">
+<mapper namespace="com.example.bpms.domain.repository.battingresults.BattingresultsRepository">
 
     <resultMap id="BattingresultsResultMap" type="Battingresults">
         <id property="id" column="id" />

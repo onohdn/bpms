@@ -41,14 +41,14 @@ public class BattingresultsImpl implements BattingresultsService {
 		
 		// 打率 batting_averageを計算
 		int hitsCount = battingresults.getHit() + battingresults.getTwo_base_hit() + battingresults.getThree_base_hit() + battingresults.getHome_run();
-		double battingAverage = hitsCount / atBat;
+		double battingAverage = (double)hitsCount / (double)atBat;
 		
 		// 出塁率 on_base_percentageを計算
-		double onBasePercentage = (hitsCount + battingresults.getWalks() + battingresults.getHit_by_pitch()) / (atBat + battingresults.getWalks() + battingresults.getHit_by_pitch() + battingresults.getSacrifice_fly());
+		double onBasePercentage = (double)(hitsCount + battingresults.getWalks() + battingresults.getHit_by_pitch()) / (double)(atBat + battingresults.getWalks() + battingresults.getHit_by_pitch() + battingresults.getSacrifice_fly());
 		
 		// 長打率 slugging_percentageを計算
-		int totalBases = (battingresults.getHit() * 1) + (battingresults.getThree_base_hit() * 2) + (battingresults.getThree_base_hit() * 3) + (battingresults.getHome_run() * 4);
-		double sluggingPercentage = totalBases / atBat;
+		int totalBases = (battingresults.getHit() * 1) + (battingresults.getTwo_base_hit() * 2) + (battingresults.getThree_base_hit() * 3) + (battingresults.getHome_run() * 4);
+		double sluggingPercentage = (double)totalBases / (double)atBat;
 		
 		// OPS on_base_plus_sluggingを計算
 		double onBasePlusSlugging = onBasePercentage + sluggingPercentage;
