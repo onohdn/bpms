@@ -8,17 +8,17 @@
     <resultMap id="userResultMap" type="User">
         <id property="id" column="id" />
         <result property="name" column="name" />
+        <result property="password" column="password" />
     </resultMap>
 
-    <select id="findById" parameterType="string" resultMap="userResultMap">
+    <select id="findById" parameterType="String" resultMap="userResultMap">
     <![CDATA[
         SELECT
-            id,
-            name
+            *
         FROM
-            user 
+            bpmsuser."user" 
         WHERE
-            id = #{id}
+            id = #{username}
     ]]>
     </select>
 
