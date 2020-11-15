@@ -12,7 +12,7 @@ public class BpmsForm implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// 固定値にしておく
-	private String id = "ichiro";
+	private String id;
 	
 	// 打席
 	private int plate_appearance;

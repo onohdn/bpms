@@ -1,9 +1,9 @@
 package com.example.bpms.domain.repository.battingresults;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import com.example.bpms.domain.model.Battingresults;
-import com.google.common.base.Optional;
 
 public interface BattingresultsRepository {
 

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.bpms.domain.model.Battingresults;
 import com.example.bpms.domain.service.battingresults.BattingresultsService;
+import com.example.bpms.domain.service.userdetails.UserDetails;
 import com.github.dozermapper.core.Mapper;
 
 @Controller
@@ -57,9 +59,8 @@ public class BpmsController {
                 DateFormat.LONG, locale);
 
         String formattedDate = dateFormat.format(date);
-
         model.addAttribute("serverTime", formattedDate);
-
+        
         return "bpms/home";
     }
 
@@ -68,7 +69,7 @@ public class BpmsController {
      */
     @PostMapping("create")
     public String create(@Valid BpmsForm bpmsForm, BindingResult bindingResult, Locale locale,
-    		Model model, RedirectAttributes attributes) {
+    		Model model, RedirectAttributes attributes, @AuthenticationPrincipal UserDetails userDetails) {
     	
     	// 入力チェックエラーがあったら、初期表示画面に戻る
     	// TODO formにはまだ入力チェックを付けていないので、無意味なコード
@@ -78,7 +79,8 @@ public class BpmsController {
     	
     	// formからBattingresultsオブジェクトを生成する
     	Battingresults battingresults = mapper.map(bpmsForm, Battingresults.class);
-    	
+    	battingresults.setId(userDetails.getUsername());
+    	System.out.println(userDetails.getUsername());
     	// サービス実行
     	Battingresults calculatedBattingresults = battingresultsService.create(battingresults);
     	

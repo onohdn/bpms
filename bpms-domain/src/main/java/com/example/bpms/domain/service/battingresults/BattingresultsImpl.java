@@ -17,16 +17,54 @@ public class BattingresultsImpl implements BattingresultsService {
 	
 	@Override
 	public Battingresults create(Battingresults battingresults) {
-		// 入力された打撃成績で、データ生成
-		battingresultsRepository.create(battingresults);
 		
-		// 入力された打撃成績を用いて、各種指標を計算する
-		Battingresults calculatedBattingresults = indexCalc(battingresults);
+		// id検索し、未登録idの場合は新規データ生成を行う
+		if (!battingresultsRepository.findById(battingresults.getId()).isPresent()) {
+			// 入力された打撃成績で、データ生成
+			battingresultsRepository.create(battingresults);
+		} else {
+			// id検索し、登録されているデータを取得する
+			Battingresults registeredButtingresults = battingresultsRepository.findById(battingresults.getId()).get();
+			
+			// 入力された打撃成績で、データを更新する
+			Battingresults addBattingresults = addBattingresults(registeredButtingresults, battingresults);
+			battingresultsRepository.updateById(addBattingresults);
+		}
 		
+		// 更新後のデータを取得する
+		Battingresults updatedButtingresults = battingresultsRepository.findById(battingresults.getId()).get();
+			
+		// 登録された打撃成績を用いて、各種指標を計算する
+		Battingresults calculatedBattingresults = indexCalc(updatedButtingresults);
+			
 		// 各種指標の計算結果を登録する
 		battingresultsRepository.updateIndexValueById(calculatedBattingresults);
 		
-		return battingresults;
+		return updatedButtingresults;
+	}
+
+	/**
+	 * 入力された打撃成績と、登録済みの打撃成績を足しこむメソッド
+	 * @param registeredButtingresults
+	 * @param battingresults
+	 * @return addBattingresults
+	 */
+	private Battingresults addBattingresults(Battingresults registeredButtingresults,
+			Battingresults battingresults) {
+		Battingresults addBattingresults = new Battingresults();
+		addBattingresults.setId(registeredButtingresults.getId());
+		addBattingresults.setPlate_appearance(registeredButtingresults.getPlate_appearance() + battingresults.getPlate_appearance());
+		addBattingresults.setHit(registeredButtingresults.getHit() + battingresults.getHit());
+		addBattingresults.setTwo_base_hit(registeredButtingresults.getTwo_base_hit() + battingresults.getTwo_base_hit());
+		addBattingresults.setThree_base_hit(registeredButtingresults.getThree_base_hit() + battingresults.getThree_base_hit());
+		addBattingresults.setHome_run(registeredButtingresults.getHome_run() + battingresults.getHome_run());
+		addBattingresults.setWalks(registeredButtingresults.getWalks() + battingresults.getWalks());
+		addBattingresults.setHit_by_pitch(registeredButtingresults.getHit_by_pitch() + battingresults.getHit_by_pitch());
+		addBattingresults.setSacrifice_bunt(registeredButtingresults.getSacrifice_bunt() + battingresults.getSacrifice_bunt());
+		addBattingresults.setSacrifice_fly(registeredButtingresults.getSacrifice_fly() + battingresults.getSacrifice_fly());
+		addBattingresults.setFaux_pas(registeredButtingresults.getFaux_pas() + battingresults.getFaux_pas());
+		
+		return addBattingresults;
 	}
 
 	/**
