@@ -2,6 +2,7 @@ package com.example.bpms.domain.service.user;
 
 import javax.inject.Inject;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
@@ -14,7 +15,10 @@ public class UserSharedServiceImpl implements UserSharedService {
 
 	@Inject
 	UserRepository userRepository;
-	
+
+    @Inject
+    PasswordEncoder passwordEncoder;
+    
 	@Transactional(readOnly=true)
 	@Override
 	public User findOne(String id) {
@@ -28,4 +32,9 @@ public class UserSharedServiceImpl implements UserSharedService {
 		return user;
 	}
 
+	public void create(User user, String password) {
+		user.setPassword(passwordEncoder.encode(password));
+		userRepository.create(user);
+	}
+	
 }

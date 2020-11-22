@@ -19,6 +19,7 @@
         <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
         <sec:session-management />
         <sec:intercept-url pattern="/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/account/create" access="permitAll" />
         <sec:intercept-url pattern="/**" access="isAuthenticated()" />
     </sec:http>
 

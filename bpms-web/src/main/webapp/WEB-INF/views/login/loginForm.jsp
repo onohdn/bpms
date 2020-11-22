@@ -24,4 +24,7 @@
                 </tr>
             </table>
         </form:form>
+        
+        <button onclick="location.href='${pageContext.request.contextPath}/account/create?form'">アカウント新規作成</button>
+        
     </div>
