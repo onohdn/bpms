@@ -34,15 +34,17 @@
 
     <insert id="create" parameterType="User">
     <![CDATA[
-        INSERT INTO user
+        INSERT INTO bpmsuser."user"
         (
             id, 
-            name
+            name,
+            password
         ) 
         VALUES
         (
             #{id}, 
-            #{name}
+            #{name},
+            #{password}
         )
     ]]>
     </insert>
