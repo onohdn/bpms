@@ -37,4 +37,7 @@ public class UserSharedServiceImpl implements UserSharedService {
 		userRepository.create(user);
 	}
 	
+	public void update(User user) {
+		userRepository.updateById(user);
+	}
 }
