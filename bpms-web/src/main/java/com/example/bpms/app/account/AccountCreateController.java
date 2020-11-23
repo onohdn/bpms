@@ -45,7 +45,7 @@ public class AccountCreateController {
 	}
 	
 	@PostMapping
-	public String update(AccountCreateForm form) {
+	public String create(AccountCreateForm form) {
 		
 		User user = beanMapper.map(form, User.class);
 		userSharedService.create(user, form.getPassword());

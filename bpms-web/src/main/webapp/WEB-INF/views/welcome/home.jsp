@@ -7,6 +7,8 @@
     <a href="./bpms/">打撃成績計算ページへ</a>
     
     <p>
+    <button onclick="location.href='${pageContext.request.contextPath}/account/update?form'">update account</button>
+    
     <form:form action="${pageContext.request.contextPath}/logout">
     	<button type="submit">Logout</button>
     </form:form>

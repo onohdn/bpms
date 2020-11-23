@@ -52,9 +52,9 @@
     <update id="updateById" parameterType="User">
     <![CDATA[
         UPDATE
-            user 
+            bpmsuser."user" 
         SET
-            name = #{name}, 
+            name = #{name}
         WHERE
             id = #{id}
     ]]>
