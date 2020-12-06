@@ -2,6 +2,9 @@ package com.example.bpms.app.bpms;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,40 +14,60 @@ public class BpmsForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	// 固定値にしておく
+	// id
 	private String id;
 	
 	// 打席
+	@NotNull
+	@Min(0)
 	private int plate_appearance;
 	
 	// 打数
 	private int at_bat;
 	
 	// 単打
+	@NotNull
+	@Min(0)
 	private int hit;
 	
 	// 二塁打
+	@NotNull
+	@Min(0)
 	private int two_base_hit;
 	
 	// 三塁打
+	@NotNull
+	@Min(0)
 	private int three_base_hit;
 	
 	// 本塁打
+	@NotNull
+	@Min(0)
 	private int home_run;
 	
 	// 四球
+	@NotNull
+	@Min(0)
 	private int walks;
 	
 	// 死球
+	@NotNull
+	@Min(0)
 	private int hit_by_pitch;
 	
 	// 犠打
+	@NotNull
+	@Min(0)
 	private int sacrifice_bunt;
 	
 	// 犠飛
+	@NotNull
+	@Min(0)
 	private int sacrifice_fly;
 	
 	// 失策
+	@NotNull
+	@Min(0)
 	private int faux_pas;
 	
 	// 打率

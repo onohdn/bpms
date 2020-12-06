@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,12 +68,11 @@ public class BpmsController {
      * 指標計算結果表示
      */
     @PostMapping("create")
-    public String create(@Valid BpmsForm bpmsForm, BindingResult bindingResult, Locale locale,
+    public String create(@Validated BpmsForm bpmsForm, BindingResult result, Locale locale,
     		Model model, RedirectAttributes attributes, @AuthenticationPrincipal UserDetails userDetails) {
     	
     	// 入力チェックエラーがあったら、初期表示画面に戻る
-    	// TODO formにはまだ入力チェックを付けていないので、無意味なコード
-    	if (bindingResult.hasErrors()) {
+    	if (result.hasErrors()) {
     		return home(locale, model);
     	}
     	

@@ -4,6 +4,8 @@ import javax.inject.Inject;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +47,12 @@ public class AccountUpdateController {
 	}
 	
 	@PostMapping(params = "confirm")
-	public String confirmUpdate(AccountUpdateForm form) {
+	public String confirmUpdate(@Validated AccountUpdateForm form, BindingResult result) {
+		// 入力チェックエラーがあった場合は、フォーム表示画面に戻す
+		if (result.hasErrors()) {
+			return "account/updateForm";
+		}
+		
 		return "account/updateConfirm";
 	}
 	
@@ -55,7 +62,11 @@ public class AccountUpdateController {
 	}
 	
 	@PostMapping
-	public String update(AccountUpdateForm form) {
+	public String update(@Validated AccountUpdateForm form, BindingResult result) {
+		// 入力チェックエラーがあった場合は、フォーム表示画面に戻す
+		if (result.hasErrors()) {
+			return "account/updateForm";
+		}
 		
 		User user = beanMapper.map(form, User.class);
 		userSharedService.update(user);

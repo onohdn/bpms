@@ -3,6 +3,8 @@ package com.example.bpms.app.account;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +37,11 @@ public class AccountCreateController {
 	}
 	
 	@PostMapping(params = "confirm")
-	public String confirmCreate(AccountCreateForm form) {
+	public String confirmCreate(@Validated AccountCreateForm form, BindingResult result) {
+		// 入力チェックエラーがあった場合は、フォーム表示画面に戻す
+		if (result.hasErrors()) {
+			return "account/createForm";
+		}
 		return "account/createConfirm";
 	}
 	
@@ -45,7 +51,11 @@ public class AccountCreateController {
 	}
 	
 	@PostMapping
-	public String create(AccountCreateForm form) {
+	public String create(@Validated AccountCreateForm form, BindingResult result) {
+		// 入力チェックエラーがあった場合は、フォーム表示画面に戻す
+		if (result.hasErrors()) {
+			return "account/createForm";
+		}
 		
 		User user = beanMapper.map(form, User.class);
 		userSharedService.create(user, form.getPassword());

@@ -17,7 +17,7 @@
         </table>
     </form:form>
 
-    <form method="get" action="${pageContext.request.contextPath}/account/update">
+    <form method="get" action="${pageContext.request.contextPath}/">
         <input type="submit" name="home" id="home" value="home" />
     </form>
 </div>
