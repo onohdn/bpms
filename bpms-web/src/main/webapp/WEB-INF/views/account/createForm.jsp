@@ -35,7 +35,7 @@
         </table>
     </form:form>
 
-    <form method="get" action="${pageContext.request.contextPath}/account/create">
+    <form method="get" action="${pageContext.request.contextPath}/login/loginForm">
         <input type="submit" name="home" id="home" value="Login page" />
     </form>
 </div>
