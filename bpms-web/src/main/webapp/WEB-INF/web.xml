@@ -73,6 +73,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>MultipartFilter</filter-name>
+        <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>MultipartFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -82,6 +91,11 @@
             <param-value>classpath*:META-INF/spring/spring-mvc.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+        <multipart-config>
+             <max-file-size>5242880</max-file-size>
+             <max-request-size>27262976</max-request-size>
+             <file-size-threshold>0</file-size-threshold>
+         </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>appServlet</servlet-name>
@@ -113,6 +127,11 @@
         <location>/WEB-INF/views/common/error/unhandledSystemError.html</location>
     </error-page>
     
+    <error-page>
+        <exception-type>org.springframework.web.multipart.MultipartException</exception-type>
+        <location>/WEB-INF/views/common/error/fileUploadError.jsp</location>
+    </error-page>
+
     <session-config>
         <!-- 30min -->
         <session-timeout>30</session-timeout>
