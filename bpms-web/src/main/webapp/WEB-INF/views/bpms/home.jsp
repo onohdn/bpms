@@ -15,4 +15,19 @@
     			失策　：<form:input path="faux_pas"/><form:errors path="faux_pas" cssClass="error-messages" /><br>
     			<form:button>計算</form:button>
     </form:form>
+    <form:form action="${pageContext.request.contextPath}/bpms/upload" method="post" modelAttribute="bpmsForm" enctype="multipart/form-data">
+      <table>
+        <tr>
+          <th width="35%">File to upload</th>
+          <td width="65%">
+            <form:input type="file" path="file" />
+            <form:errors path="file" />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><form:button>Upload</form:button></td>
+        </tr>
+      </table>
+    </form:form>
 </div>

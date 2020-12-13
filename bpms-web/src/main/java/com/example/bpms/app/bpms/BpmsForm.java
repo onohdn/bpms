@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -81,5 +83,8 @@ public class BpmsForm implements Serializable {
 	
 	// OPS
 	private double on_base_plus_slugging;
+	
+	// アップロードファイル
+	private MultipartFile file;
 	
 }

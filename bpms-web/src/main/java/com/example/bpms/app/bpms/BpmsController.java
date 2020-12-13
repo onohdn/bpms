@@ -1,5 +1,8 @@
 package com.example.bpms.app.bpms;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -79,7 +82,6 @@ public class BpmsController {
     	// formからBattingresultsオブジェクトを生成する
     	Battingresults battingresults = mapper.map(bpmsForm, Battingresults.class);
     	battingresults.setId(userDetails.getUsername());
-    	System.out.println(userDetails.getUsername());
     	// サービス実行
     	Battingresults calculatedBattingresults = battingresultsService.create(battingresults);
     	
@@ -89,4 +91,56 @@ public class BpmsController {
     	return "bpms/result";
     	
     }
+    
+    /**
+     * ファイルアップロード
+     * @throws IOException 
+     */
+    @PostMapping("upload")
+    public String upload(BpmsForm bpmsForm, Model model, RedirectAttributes attributes, @AuthenticationPrincipal UserDetails userDetails) throws IOException {
+    	
+    	// Battingresultsオブジェクトを生成する
+    	Battingresults battingresults = createBattingResults(bpmsForm, userDetails);
+    	
+    	// サービス実行
+    	Battingresults calculatedBattingresults = battingresultsService.create(battingresults);
+    	
+    	// 計算結果を詰め込む
+    	model.addAttribute("calculatedBattingresults", calculatedBattingresults);
+    	
+    	return "bpms/result";
+    }
+
+    /**
+     * アップロードされたファイルとユーザ認証情報を受け取り、BattingResultsオブジェクトを生成するメソッドです
+     * @param arr
+     * @param userDetails
+     * @return bpmsForm
+     * @throws IOException 
+     */
+	private Battingresults createBattingResults(BpmsForm bpmsForm, UserDetails userDetails) throws IOException {
+		
+		// ファイルの読み込み
+    	InputStreamReader is = new InputStreamReader(bpmsForm.getFile().getInputStream());
+    	BufferedReader br = new BufferedReader(is);
+    	
+    	// 入力行をカンマ区切りで配列化
+    	String[] arr = (br.readLine()).split(",");
+    	
+    	// Battingresultsオブジェクトを生成
+		Battingresults battingresults = new Battingresults();
+		battingresults.setId(userDetails.getUsername());
+		battingresults.setPlate_appearance(Integer.parseInt(arr[0]));
+		battingresults.setHit(Integer.parseInt(arr[1]));
+		battingresults.setTwo_base_hit(Integer.parseInt(arr[2]));
+		battingresults.setThree_base_hit(Integer.parseInt(arr[3]));
+		battingresults.setHome_run(Integer.parseInt(arr[4]));
+		battingresults.setWalks(Integer.parseInt(arr[5]));
+		battingresults.setHit_by_pitch(Integer.parseInt(arr[6]));
+		battingresults.setSacrifice_bunt(Integer.parseInt(arr[7]));
+		battingresults.setSacrifice_fly(Integer.parseInt(arr[8]));
+		battingresults.setFaux_pas(Integer.parseInt(arr[9]));
+		
+		return battingresults;
+	}
 }
