@@ -1,0 +1,61 @@
+
+# 初期構築用SQL
+## 以下のコマンド群を上から順に実行すること
+
+// スキーマ作成
+create schema bpmsuser;
+
+================================================
+
+// テーブル作成その1
+CREATE TABLE bpmsuser.battingresults
+(
+    id text COLLATE pg_catalog."default" NOT NULL,
+    plate_appearance integer,
+    at_bat integer,
+    hit integer,
+    two_base_hit integer,
+    three_base_hit integer,
+    home_run integer,
+    walks integer,
+    hit_by_pitch integer,
+    sacrifice_bunt integer,
+    sacrifice_fly integer,
+    faux_pas integer,
+    batting_average real,
+    on_base_percentage real,
+    slugging_percentage real,
+    on_base_plus_slugging real,
+    CONSTRAINT battingresults_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE bpmsuser.battingresults
+    OWNER to bpmsuser;
+    
+================================================
+
+// テーブル作成その２
+CREATE TABLE bpmsuser."user"
+(
+    id text COLLATE pg_catalog."default" NOT NULL,
+    name text COLLATE pg_catalog."default" NOT NULL,
+    password text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT user_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE bpmsuser."user"
+    OWNER to bpmsuser;
+
+================================================
+
+// 初期データの作成
+INSERT INTO bpmsuser."user" VALUES ('demo', 'uchida', '{pbkdf2}1dd84f42a7a9a173f8f806d736d34939bed6a36e2948e8bfe88801ee5e6e61b815efc389d03165a4');
+
