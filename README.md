@@ -33,9 +33,24 @@ sudo yum install tomcat
 tomcat version
 ```
 2021/01/23現在、手順のとおりであればTomcatは8.5がインストールされている
- - 確認のため、適当なhtmlファイルを以下のパスに配置する
+ - 確認のため、適当なhtmlファイルをROOT配下に配置する
+```bash
+# ROOT作成
+dir="/usr/share/tomcat/webapps/ROOT"
+sudo mkdir ${dir}
+
+# index.htmlをコピー
+sudo cp ./index.html ${dir}
+
+# 所有を変更
+sudo chown -R tomcat:tomcat ${dir}
 ```
-/usr/share/tomcat/webapps/ROOT
+ - tomcatサービスを起動
+```bash
+# 起動
+sudo systemctl start tomcat
+# 確認
+systemctl status tomcat # active (running)となっていること
 ```
  - 以下にインターネットブラウザでアクセスする
 ```
