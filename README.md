@@ -40,7 +40,7 @@ dir="/usr/share/tomcat/webapps/ROOT"
 sudo mkdir ${dir}
 
 # index.htmlをコピー
-sudo cp ./index.html ${dir}
+sudo cp ./test/index.html ${dir}
 
 # 所有を変更
 sudo chown -R tomcat:tomcat ${dir}
