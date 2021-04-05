@@ -40,11 +40,11 @@ wget https://ftp.kddi-research.jp/infosystems/apache/tomcat/tomcat-8/v8.5.64/bin
 ```bash
 tar -xzvf ./apache-tomcat-8.5.64.tar.gz
 mv ./apache-tomcat-8.5.64 /opt
-cheown -R tomcat:tomcat /opt/apache-tomcat-8.5.64
+chown -R tomcat:tomcat /opt/apache-tomcat-8.5.64
 ```
  - tomcatサービスの登録
    - root権限で、Unit作成する
-     - /usr/lib/systemd.system/tomcat.service を作成し、中身は以下を記載する
+     - /usr/lib/systemd/system/tomcat.service を作成し、中身は以下を記載する
 ```
 # Systemd unit file for default tomcat
 #
@@ -73,6 +73,11 @@ Group=tomcat
 WantedBy=multi-user.target
 
 ```
+ - tomcat.serviceでディレクトリpathを`/opt/apache-tomcat`としているのでシンボリックリンクを作成する
+```bash
+ln -s /opt/apache-tomcat-8.5.64 /opt/apache-tomcat
+chown -h tomcat:tomcat /opt/apache-tomcat
+```
  - tomcat自動起動設定
 ```bash
 systemctl enable tomcat.service
@@ -85,15 +90,12 @@ systemctl enable tomcat.service
  - 確認のため、適当なhtmlファイルをROOT配下に配置する
    - htmlファイルの配置をしない場合、例のtomcatページが開くので、htmlファイル配置は任意。
 ```bash
-# ROOT作成
-dir="/usr/share/tomcat/webapps/ROOT"
-sudo mkdir ${dir}
-
 # index.htmlをコピー
+cd ~
+dir="/opt/apache-tomcat/webapps/ROOT"
 sudo cp ./test/index.html ${dir}
-
-# 所有を変更
-sudo chown -R tomcat:tomcat ${dir}
+sudo chown tomcat:tomcat ${dir}/index.html
+sudo chmod 640 ${dir}/index.html
 ```
  - tomcatサービスを起動
 ```bash
@@ -103,6 +105,7 @@ sudo systemctl start tomcat
 systemctl status tomcat # active (running)となっていること
 ```
  - 以下にインターネットブラウザでアクセスする
+   - セキュリティグループのインバウンドルールに8080を許可しておくこと
 ```
 http://EC2のパブリックIP:8080
 ```
