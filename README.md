@@ -18,7 +18,7 @@
 ## 1.javaのインストール
  - javaをインストールする
 ```bash
-sudo yum install java-1.8.0-openjdk
+sudo yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel
 ```
  - インストール後、バージョン確認を実行
 ```bash
